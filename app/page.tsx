@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProblemSection } from "@/components/sections/ProblemSection";
-import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
+import { HowItWorksScroll } from "@/components/sections/HowItWorksScroll";
 import { IndexesSection } from "@/components/sections/IndexesSection";
 import { IndiaMapSection } from "@/components/sections/IndiaMapSection";
 import { DashboardTeaserSection } from "@/components/sections/DashboardTeaserSection";
@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <HeroSection />
       <ProblemSection />
-      <HowItWorksSection />
+      <HowItWorksScroll />
       <IndexesSection />
       <IndiaMapSection />
       <DashboardTeaserSection />
