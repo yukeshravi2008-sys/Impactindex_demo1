@@ -1,27 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme inline {
+  --color-background: hsl(40 33% 98%);
+  --color-foreground: hsl(24 10% 10%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(24 10% 10%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(24 10% 10%);
+  --color-primary: hsl(160 84% 26%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(40 20% 96%);
+  --color-secondary-foreground: hsl(24 10% 10%);
+  --color-muted: hsl(40 20% 96%);
+  --color-muted-foreground: hsl(24 6% 45%);
+  --color-accent: hsl(38 92% 90%);
+  --color-accent-foreground: hsl(24 10% 10%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(40 10% 90%);
+  --color-input: hsl(40 10% 90%);
+  --color-ring: hsl(160 84% 35%);
+  --color-chart-1: hsl(160 84% 26%);
+  --color-chart-2: hsl(38 92% 50%);
+  --color-chart-3: hsl(45 93% 47%);
+  --color-chart-4: hsl(220 70% 50%);
+  --color-chart-5: hsl(280 65% 60%);
+  --radius: 1rem;
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  body {
+    @apply bg-background text-foreground;
+  }
+  /* Fintech polish: smooth transitions on interactive elements */
+  a, button, [role="button"], input, select, textarea {
+    @apply transition-colors duration-150;
+  }
+  /* Data-dense number styling */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
