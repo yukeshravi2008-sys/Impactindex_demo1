@@ -55,9 +55,8 @@ export function DashboardTeaserSection() {
 
           <div className="divide-y divide-stone-100">
             {healthIndex.ngos.map((ngo) => {
-              const totalWeight = healthIndex.ngos.reduce((s, n) => s + n.impactScore, 0);
-              const share = (ngo.impactScore / totalWeight) * 100;
-              const amount = Math.round(totalRaised * (ngo.impactScore / totalWeight));
+              const share = 100 / healthIndex.ngos.length;
+              const amount = Math.round(totalRaised / healthIndex.ngos.length);
 
               return (
                 <div key={ngo.id} className="px-6 py-4">

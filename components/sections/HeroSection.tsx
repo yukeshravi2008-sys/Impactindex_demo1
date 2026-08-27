@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/layout/Container";
 import { TickerStrip } from "@/components/ui/TickerStrip";
-import { computeSplit } from "@/lib/donations";
+import { computeEqualSplit } from "@/lib/donations";
 import { formatINR } from "@/lib/format";
 import { indexes } from "@/data/indexes";
 
 export function HeroSection() {
   const eduIndex = indexes.find((i) => i.slug === "education")!;
-  const previewSplits = computeSplit(eduIndex, 1000, "equal");
+  const previewSplits = computeEqualSplit(eduIndex, 1000);
   const ngoCount = indexes.reduce((sum, idx) => sum + idx.ngos.length, 0);
 
   return (

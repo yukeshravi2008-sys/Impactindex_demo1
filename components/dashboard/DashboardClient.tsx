@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   PieChart,
@@ -14,15 +14,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import toast from "react-hot-toast";
 import {
-  RefreshCw,
   IndianRupee,
   Layers,
   Users,
   ArrowUpRight,
   ArrowDownRight,
-  Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -42,17 +39,16 @@ import {
   type PortfolioIndex,
 } from "@/data/portfolio";
 import { indexes } from "@/data/indexes";
-import { computeSplit } from "@/lib/donations";
+import { computeEqualSplit } from "@/lib/donations";
 import { formatINR } from "@/lib/format";
 import { useCountUp } from "@/hooks/useCountUp";
 
 const COLORS = ["#059669", "#10b981", "#34d399", "#6ee7b7", "#a7f3d0"];
 
 export function DashboardClient() {
-  const [allocations, setAllocations] = useState<PortfolioIndex[]>(
+  const [allocations] = useState<PortfolioIndex[]>(
     portfolioIndexes,
   );
-  const [rebalancing, setRebalancing] = useState(false);
   const [navHistory] = useState(() => generateNavHistory());
 
   const totalInvested = allocations.reduce((s, i) => s + i.invested, 0);
@@ -71,39 +67,8 @@ export function DashboardClient() {
     value: a.invested,
   }));
 
-  const handleRebalance = useCallback(() => {
-    setRebalancing(true);
-
-    setTimeout(() => {
-      setAllocations((prev) => {
-        const total = prev.reduce((s, i) => s + i.invested, 0);
-        const rebalanced = prev.map((item) => {
-          const score = item.impactScore;
-          const totalScore = prev.reduce((s, i) => s + i.impactScore, 0);
-          const newShare = score / totalScore;
-          return {
-            ...item,
-            invested: Math.round(total * newShare),
-            allocation: Math.round(newShare * 100),
-            nav: item.nav + (Math.random() - 0.3) * 0.5,
-            navChange: parseFloat(
-              (item.navChange + (Math.random() - 0.2) * 0.8).toFixed(2),
-            ),
-          };
-        });
-        return rebalanced;
-      });
-
-      setRebalancing(false);
-      toast.success(
-        "Portfolio rebalanced based on latest impact data",
-        { icon: "⚡" },
-      );
-    }, 1500);
-  }, []);
-
   const heroIndex = indexes[0];
-  const heroSplits = computeSplit(heroIndex, 1000, "equal");
+  const heroSplits = computeEqualSplit(heroIndex, 1000);
 
   return (
     <div className="min-h-screen bg-background">
@@ -126,19 +91,6 @@ export function DashboardClient() {
               <IndianRupee className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
               Invest more
             </Button>
-            <Button
-              onClick={handleRebalance}
-              disabled={rebalancing}
-              variant="outline"
-              size="sm"
-              className="rounded-lg"
-            >
-              <RefreshCw
-                className={`mr-1.5 h-3.5 w-3.5 ${rebalancing ? "animate-spin" : ""}`}
-                aria-hidden="true"
-              />
-              {rebalancing ? "Rebalancing…" : "Rebalance Portfolio"}
-            </Button>
           </div>
         </div>
 
@@ -159,15 +111,6 @@ export function DashboardClient() {
             value={animatedBeneficiaries.toLocaleString("en-IN")}
             icon={Users}
             trend={+12.8}
-          />
-          <StatCard
-            label="Avg Impact Score"
-            value={Math.round(
-              allocations.reduce((s, i) => s + i.impactScore, 0) /
-                allocations.length,
-            ).toString()}
-            icon={Activity}
-            trend={+2.1}
           />
         </div>
 

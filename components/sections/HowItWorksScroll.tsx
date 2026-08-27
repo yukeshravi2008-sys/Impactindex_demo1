@@ -19,7 +19,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { TrendingUp, Repeat } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 const STEPS = [
   {
@@ -34,8 +34,8 @@ const STEPS = [
   },
   {
     number: "03",
-    title: "Weighted by Trust",
-    body: "Each NGO's share reflects its transparency and impact track record — not guesswork.",
+    title: "Equal Distribution",
+    body: "Every NGO in the index receives an exactly equal share of your donation.",
   },
   {
     number: "04",
@@ -46,26 +46,14 @@ const STEPS = [
     number: "05",
     title: "Track Your Portfolio",
     body: "See exactly where your money went and how your impact is growing.",
-  },
-  {
-    number: "06",
-    title: "Rebalanced for Real Results",
-    body: "Funds periodically shift toward NGOs showing the strongest real-world outcomes.",
-  },
+  }
 ] as const;
 
 const DONUT_DATA = [
-  { name: "Pratham", value: 35, color: "#059669" },
+  { name: "Pratham", value: 25, color: "#059669" },
   { name: "Teach for India", value: 25, color: "#10b981" },
-  { name: "Room to Read", value: 22, color: "#34d399" },
-  { name: "Akshara Foundation", value: 18, color: "#6ee7b7" },
-];
-
-const DONUT_REBALANCED = [
-  { name: "Pratham", value: 40, color: "#059669" },
-  { name: "Teach for India", value: 20, color: "#10b981" },
-  { name: "Room to Read", value: 28, color: "#34d399" },
-  { name: "Akshara Foundation", value: 12, color: "#6ee7b7" },
+  { name: "Room to Read", value: 25, color: "#34d399" },
+  { name: "Akshara Foundation", value: 25, color: "#6ee7b7" },
 ];
 
 const NAV_DATA = [
@@ -84,10 +72,10 @@ const NAV_DATA = [
 ];
 
 const NGOS = [
-  { name: "Pratham", short: "PR", amount: 350 },
+  { name: "Pratham", short: "PR", amount: 250 },
   { name: "Teach for India", short: "TF", amount: 250 },
-  { name: "Room to Read", short: "RR", amount: 220 },
-  { name: "Akshara Foundation", short: "AF", amount: 180 },
+  { name: "Room to Read", short: "RR", amount: 250 },
+  { name: "Akshara Foundation", short: "AF", amount: 250 },
 ];
 
 /* ────── Progress dots ────── */
@@ -234,7 +222,7 @@ function MoneyFlowVisual({ progress }: { progress: number }) {
   );
 }
 
-/* ────── Visual: Step 3 — Donut chart (trust-weighted) ────── */
+/* ────── Visual: Step 3 — Donut chart (equal split) ────── */
 function DonutVisual({ progress }: { progress: number }) {
   const animData = useMemo(
     () =>
@@ -271,7 +259,7 @@ function DonutVisual({ progress }: { progress: number }) {
           <span className="text-2xl font-bold text-foreground">
             {Math.round(progress * 100)}%
           </span>
-          <span className="text-xs text-muted-foreground">split by trust</span>
+          <span className="text-xs text-muted-foreground">divided equally</span>
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-3">
@@ -403,93 +391,6 @@ function NavChartVisual({ progress }: { progress: number }) {
   );
 }
 
-/* ────── Visual: Step 6 — Rebalanced donut ────── */
-function RebalanceVisual({ progress }: { progress: number }) {
-  const isRebalanced = progress > 0.4;
-  const data = isRebalanced ? DONUT_REBALANCED : DONUT_DATA;
-  const animData = useMemo(
-    () =>
-      data.map((d) => ({
-        ...d,
-        value: isRebalanced
-          ? Math.round(
-              DONUT_DATA.find((o) => o.name === d.name)!.value +
-                (d.value - DONUT_DATA.find((o) => o.name === d.name)!.value) *
-                  Math.min(1, (progress - 0.4) * 2.5),
-            )
-          : d.value,
-      })),
-    [progress, isRebalanced, data],
-  );
-
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative h-52 w-52">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={animData}
-              cx="50%"
-              cy="50%"
-              innerRadius={50}
-              outerRadius={80}
-              dataKey="value"
-              strokeWidth={2}
-              stroke="#fff"
-              animationDuration={0}
-            >
-              {animData.map((entry, i) => (
-                <Cell key={i} fill={entry.color} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <Repeat
-            className={`h-5 w-5 transition-colors duration-500 ${
-              isRebalanced ? "text-emerald-600" : "text-stone-300"
-            }`}
-          />
-          <span className="mt-1 text-[10px] text-muted-foreground">
-            {isRebalanced ? "Rebalanced" : "Pre-rebalance"}
-          </span>
-        </div>
-      </div>
-
-      <div className="w-full max-w-xs space-y-1.5">
-        {animData.map((d) => {
-          const orig = DONUT_DATA.find((o) => o.name === d.name)!;
-          const delta = d.value - orig.value;
-          return (
-            <div
-              key={d.name}
-              className="flex items-center justify-between rounded-lg bg-stone-50 px-3 py-1.5 text-xs"
-            >
-              <span className="flex items-center gap-1.5 text-foreground">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: d.color }}
-                />
-                {d.name}
-              </span>
-              <span
-                className={`font-medium ${delta > 0 ? "text-emerald-600" : delta < 0 ? "text-red-500" : "text-muted-foreground"}`}
-              >
-                {d.value}%
-                {delta !== 0 && (
-                  <span className="ml-1 text-[10px]">
-                    {delta > 0 ? `+${delta}` : delta}
-                  </span>
-                )}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 /* ────── Stage visuals switcher ────── */
 function StageVisual({ stage, progress }: { stage: number; progress: number }) {
   switch (stage) {
@@ -503,8 +404,6 @@ function StageVisual({ stage, progress }: { stage: number; progress: number }) {
       return <ToggleVisual progress={progress} />;
     case 4:
       return <NavChartVisual progress={progress} />;
-    case 5:
-      return <RebalanceVisual progress={progress} />;
     default:
       return null;
   }
@@ -522,8 +421,8 @@ export function HowItWorksScroll() {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const stepIndex = Math.min(5, Math.floor(latest * 6));
-    const stepLocal = (latest * 6) - stepIndex;
+    const stepIndex = Math.min(4, Math.floor(latest * 5));
+    const stepLocal = (latest * 5) - stepIndex;
     setActiveStep(stepIndex);
     setStepProgress(Math.min(1, Math.max(0, stepLocal)));
   });
@@ -534,7 +433,7 @@ export function HowItWorksScroll() {
       id="how-it-works"
       aria-labelledby="scroll-how-heading"
       className="relative bg-background scroll-mt-20"
-      style={{ height: "600vh" }}
+      style={{ height: "500vh" }}
     >
       <Container className="relative h-full">
         <ProgressDots active={activeStep} />

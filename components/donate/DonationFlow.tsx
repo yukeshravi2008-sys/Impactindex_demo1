@@ -1,14 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { IndexFund, SplitMode, Allocation } from "@/types";
+import type { IndexFund, Allocation } from "@/types";
 import { IndexPicker } from "./IndexPicker";
-import { SplitModeToggle } from "./SplitModeToggle";
 import { AmountInput } from "./AmountInput";
 import { SplitPreviewTable } from "./SplitPreviewTable";
 import { MockCheckout } from "./MockCheckout";
 import { SipToggle, type DonationFrequency } from "./SipToggle";
-import { computeSplit, MIN_DONATION } from "@/lib/donations";
+import { computeEqualSplit, MIN_DONATION } from "@/lib/donations";
 
 interface DonationFlowProps {
   indexes: IndexFund[];
@@ -19,7 +18,6 @@ export function DonationFlow({ indexes, initialIndex }: DonationFlowProps) {
   const [indexSlug, setIndexSlug] = useState<string>(
     initialIndex?.slug ?? indexes[0].slug,
   );
-  const [mode, setMode] = useState<SplitMode>("equal");
   const [amount, setAmount] = useState<number>(1000);
   const [status, setStatus] = useState<"idle" | "processing" | "done">("idle");
   const [receiptId, setReceiptId] = useState<string>("");
@@ -31,8 +29,8 @@ export function DonationFlow({ indexes, initialIndex }: DonationFlowProps) {
   );
 
   const splits: Allocation[] = useMemo(
-    () => computeSplit(index, amount, mode),
-    [index, amount, mode],
+    () => computeEqualSplit(index, amount),
+    [index, amount],
   );
 
   const handleSimulate = () => {
@@ -46,7 +44,6 @@ export function DonationFlow({ indexes, initialIndex }: DonationFlowProps) {
   const handleReset = () => {
     setStatus("idle");
     setAmount(1000);
-    setMode("equal");
   };
 
   if (status === "done") {
@@ -54,7 +51,6 @@ export function DonationFlow({ indexes, initialIndex }: DonationFlowProps) {
       <MockCheckout
         receiptId={receiptId}
         amount={amount}
-        mode={mode}
         splits={splits}
         indexName={index.name}
         onReset={handleReset}
@@ -70,7 +66,14 @@ export function DonationFlow({ indexes, initialIndex }: DonationFlowProps) {
           selected={indexSlug}
           onChange={setIndexSlug}
         />
-        <SplitModeToggle mode={mode} onChange={setMode} />
+        <div className="bg-primary/5 border border-primary/10 rounded-lg p-4">
+          <p className="text-sm font-medium text-primary">
+            Your donation will be divided equally among all NGOs in this Index.
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Example: ₹{amount || 1000} ÷ {index.ngos.length} NGOs = ₹{((amount || 1000) / index.ngos.length).toFixed(2)} each
+          </p>
+        </div>
         <SipToggle
           frequency={frequency}
           onChange={setFrequency}

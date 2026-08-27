@@ -10,9 +10,9 @@ const steps = [
   },
   {
     number: "02",
-    title: "Choose your split",
+    title: "Auto-split evenly",
     description:
-      "Equal — every NGO receives the same share. Or Weighted — shares follow each NGO's verified impact score.",
+      "Your donation is automatically divided equally among every NGO in the chosen index.",
   },
   {
     number: "03",

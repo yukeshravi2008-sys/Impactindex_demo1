@@ -2,13 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/layout/Container";
 import { formatINR } from "@/lib/format";
-import type { Allocation, SplitMode } from "@/types";
+import type { Allocation } from "@/types";
 import { CheckCircle, RotateCcw } from "lucide-react";
 
 interface MockCheckoutProps {
   receiptId: string;
   amount: number;
-  mode: SplitMode;
   splits: Allocation[];
   indexName: string;
   onReset: () => void;
@@ -17,7 +16,6 @@ interface MockCheckoutProps {
 export function MockCheckout({
   receiptId,
   amount,
-  mode,
   splits,
   indexName,
   onReset,
@@ -53,10 +51,6 @@ export function MockCheckout({
             <div className="flex items-center justify-between py-2">
               <span className="text-sm text-muted-foreground">Index</span>
               <span className="text-sm text-foreground">{indexName}</span>
-            </div>
-            <div className="flex items-center justify-between py-2">
-              <span className="text-sm text-muted-foreground">Split mode</span>
-              <span className="text-sm capitalize text-foreground">{mode}</span>
             </div>
             <div className="py-3">
               <p className="mb-2 text-xs font-medium text-muted-foreground">

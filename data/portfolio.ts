@@ -27,7 +27,6 @@ export interface PortfolioIndex {
   allocation: number;
   nav: number;
   navChange: number;
-  impactScore: number;
   beneficiaries: number;
 }
 
@@ -40,7 +39,7 @@ export const portfolioIndexes: PortfolioIndex[] = [
     allocation: 40,
     nav: 102.34,
     navChange: 2.34,
-    impactScore: 81,
+
     beneficiaries: 340000,
   },
   {
@@ -51,7 +50,7 @@ export const portfolioIndexes: PortfolioIndex[] = [
     allocation: 30,
     nav: 101.87,
     navChange: 1.87,
-    impactScore: 84,
+
     beneficiaries: 655000,
   },
   {
@@ -62,7 +61,7 @@ export const portfolioIndexes: PortfolioIndex[] = [
     allocation: 30,
     nav: 99.55,
     navChange: -0.45,
-    impactScore: 79,
+
     beneficiaries: 748000,
   },
 ];

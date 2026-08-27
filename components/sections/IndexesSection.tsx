@@ -17,10 +17,6 @@ const icons: Record<string, string> = {
 };
 
 export function IndexCard({ index }: { index: IndexFund }) {
-  const avgImpact = Math.round(
-    index.ngos.reduce((s, n) => s + n.impactScore, 0) / index.ngos.length,
-  );
-
   return (
     <Card className="group flex flex-col overflow-hidden rounded-2xl border-stone-100 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex-1 p-6">
@@ -45,7 +41,7 @@ export function IndexCard({ index }: { index: IndexFund }) {
         <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <Users className="h-3.5 w-3.5" aria-hidden="true" />
-            Avg impact {avgImpact}
+            {(index.ngos.reduce((s, n) => s + n.beneficiaries, 0) / 1000).toFixed(0)}k beneficiaries
           </span>
           <span>Min {formatINR(MIN_DONATION)}</span>
         </div>

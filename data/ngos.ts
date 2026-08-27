@@ -9,7 +9,7 @@ export const ngos: Ngo[] = [
     description:
       "Runs after-school learning centres for first-generation learners in urban slums, reaching 28,000 children annually.",
     verifiedSince: 2016,
-    impactScore: 88,
+
     beneficiaries: 210000,
   },
   {
@@ -20,7 +20,7 @@ export const ngos: Ngo[] = [
     description:
       "Provides STEM scholarships and mentoring for rural girls in tier-2 and tier-3 towns across Tamil Nadu.",
     verifiedSince: 2019,
-    impactScore: 79,
+
     beneficiaries: 45000,
   },
   {
@@ -31,7 +31,7 @@ export const ngos: Ngo[] = [
     description:
       "Operates mobile libraries and weekend literacy camps for tribal communities in the Northeast.",
     verifiedSince: 2021,
-    impactScore: 72,
+
     beneficiaries: 18000,
   },
   {
@@ -42,7 +42,7 @@ export const ngos: Ngo[] = [
     description:
       "Runs free primary-health camps and telemedicine vans in underserved districts of central India.",
     verifiedSince: 2017,
-    impactScore: 85,
+
     beneficiaries: 135000,
   },
   {
@@ -53,7 +53,7 @@ export const ngos: Ngo[] = [
     description:
       "Focuses on maternal and neonatal health through community health workers and clinic upgrades.",
     verifiedSince: 2015,
-    impactScore: 91,
+
     beneficiaries: 290000,
   },
   {
@@ -64,7 +64,7 @@ export const ngos: Ngo[] = [
     description:
       "Operates subsidised dialysis centres and cardiac screening camps for low-income patients.",
     verifiedSince: 2020,
-    impactScore: 74,
+
     beneficiaries: 32000,
   },
   {
@@ -75,7 +75,7 @@ export const ngos: Ngo[] = [
     description:
       "First-responder relief teams providing shelter, food, and medical aid during floods and cyclones.",
     verifiedSince: 2014,
-    impactScore: 90,
+
     beneficiaries: 420000,
   },
   {
@@ -86,7 +86,7 @@ export const ngos: Ngo[] = [
     description:
       "Distributes emergency kits and rebuilds homes in flood-hit regions of Assam and Meghalaya.",
     verifiedSince: 2018,
-    impactScore: 82,
+
     beneficiaries: 175000,
   },
   {
@@ -97,7 +97,7 @@ export const ngos: Ngo[] = [
     description:
       "Provides disaster preparedness training and post-cyclone rehabilitation along India's eastern coast.",
     verifiedSince: 2022,
-    impactScore: 68,
+
     beneficiaries: 58000,
   },
   {
@@ -108,7 +108,7 @@ export const ngos: Ngo[] = [
     description:
       "Equips government schools with digital classrooms and teacher training in semi-rural Maharashtra.",
     verifiedSince: 2018,
-    impactScore: 83,
+
     beneficiaries: 67000,
   },
   {
@@ -119,7 +119,7 @@ export const ngos: Ngo[] = [
     description:
       "Runs chronic-disease management programmes and affordable pharmacy networks in urban slums.",
     verifiedSince: 2016,
-    impactScore: 87,
+
     beneficiaries: 198000,
   },
   {
@@ -130,7 +130,7 @@ export const ngos: Ngo[] = [
     description:
       "Delivers rapid relief and long-term livelihood restoration after super-cyclones in Odisha.",
     verifiedSince: 2019,
-    impactScore: 77,
+
     beneficiaries: 95000,
   },
 ];

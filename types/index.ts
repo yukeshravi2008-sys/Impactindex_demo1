@@ -1,5 +1,4 @@
 export type IndexSlug = "education" | "health" | "disaster-relief";
-export type SplitMode = "equal" | "weighted";
 
 export interface Ngo {
   id: string;
@@ -8,7 +7,6 @@ export interface Ngo {
   state: string;
   description: string;
   verifiedSince: number;
-  impactScore: number;
   beneficiaries: number;
 }
 
