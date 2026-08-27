@@ -12,8 +12,8 @@ export function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-700">
                 <TrendingUp className="h-4 w-4 text-white" aria-hidden="true" />
               </div>
-              <span className="font-[family-name:var(--font-display)] text-lg font-semibold">
-                ImpactIndex
+              <span className="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wider">
+                IMPACTINDEX
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
