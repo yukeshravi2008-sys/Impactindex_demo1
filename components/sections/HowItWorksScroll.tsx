@@ -30,17 +30,17 @@ const STEPS = [
   {
     number: "02",
     title: "Your Money Auto-Splits",
-    body: "Your donation is automatically divided across vetted NGOs working in that space.",
+    body: "Your donation is automatically divided across NGOs working in that cause.",
   },
   {
     number: "03",
     title: "Equal Distribution",
-    body: "Every NGO in the index receives an exactly equal share of your donation.",
+    body: "Every NGO in the Index receives the same share of your donation.",
   },
   {
     number: "04",
-    title: "One-Time or SIP",
-    body: "Give once, or set up a small recurring monthly investment in impact.",
+    title: "One-Time or Monthly SIP",
+    body: "Give once, or choose to support your selected Index every month.",
   },
   {
     number: "05",
@@ -72,39 +72,12 @@ const NAV_DATA = [
 ];
 
 const NGOS = [
-  { name: "Pratham", short: "PR", amount: 250 },
-  { name: "Teach for India", short: "TF", amount: 250 },
-  { name: "Room to Read", short: "RR", amount: 250 },
-  { name: "Akshara Foundation", short: "AF", amount: 250 },
+  { name: "Pratham", short: "PR", amount: 200 },
+  { name: "Teach for India", short: "TF", amount: 200 },
+  { name: "Room to Read", short: "RR", amount: 200 },
+  { name: "Akshara Foundation", short: "AF", amount: 200 },
 ];
 
-/* ────── Progress dots ────── */
-function ProgressDots({ active }: { active: number }) {
-  return (
-    <div className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex xl:-left-8">
-      {STEPS.map((_, i) => (
-        <div key={i} className="relative flex items-center">
-          <div
-            className={`h-3 w-3 rounded-full border-2 transition-all duration-500 ${
-              i === active
-                ? "border-emerald-600 bg-emerald-600 scale-125"
-                : i < active
-                  ? "border-emerald-400 bg-emerald-400"
-                  : "border-stone-300 bg-white"
-            }`}
-          />
-          {i < STEPS.length - 1 && (
-            <div
-              className={`absolute left-1/2 top-full h-3 w-0.5 -translate-x-1/2 transition-colors duration-500 ${
-                i < active ? "bg-emerald-400" : "bg-stone-200"
-              }`}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
 
 /* ────── Visual: Step 1 — Index Card ────── */
 function IndexCardVisual({ progress }: { progress: number }) {
@@ -139,7 +112,7 @@ function IndexCardVisual({ progress }: { progress: number }) {
             Fund learning, not logistics.
           </h4>
           <p className="mt-1 text-xs text-muted-foreground">
-            4 verified NGOs improving literacy and STEM access.
+            4 NGOs improving literacy and STEM access.
           </p>
           <div
             className="mt-4 rounded-xl p-3 text-center transition-all duration-500"
@@ -165,7 +138,7 @@ function IndexCardVisual({ progress }: { progress: number }) {
 function MoneyFlowVisual({ progress }: { progress: number }) {
   const mainAmountOpacity = progress < 0.3 ? 1 : Math.max(0, 1 - (progress - 0.3) * 3);
   const streamsOpacity = progress < 0.3 ? 0 : Math.min(1, (progress - 0.3) * 3);
-  const amount = Math.round(1000 - progress * 650);
+  const amount = 800;
   const ngoAmounts = NGOS.map((n) => Math.round(n.amount * Math.min(1, streamsOpacity)));
 
   return (
@@ -228,7 +201,7 @@ function DonutVisual({ progress }: { progress: number }) {
     () =>
       DONUT_DATA.map((d) => ({
         ...d,
-        value: Math.round(d.value * Math.min(1, progress * 1.5)),
+        value: 25 * Math.max(0.01, Math.min(1, progress * 1.5)),
       })),
     [progress],
   );
@@ -257,9 +230,9 @@ function DonutVisual({ progress }: { progress: number }) {
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-2xl font-bold text-foreground">
-            {Math.round(progress * 100)}%
+            100%
           </span>
-          <span className="text-xs text-muted-foreground">divided equally</span>
+          <span className="text-xs text-muted-foreground">Equally Split</span>
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-3">
@@ -278,7 +251,7 @@ function DonutVisual({ progress }: { progress: number }) {
 function ToggleVisual({ progress }: { progress: number }) {
   const isSip = progress > 0.5;
   const toggleX = isSip ? 100 : 0;
-  const cumulative = Math.round(isSip ? 1000 * 12 * 0.92 : 1000);
+  const cumulative = isSip ? 12000 : 1000;
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -319,16 +292,11 @@ function ToggleVisual({ progress }: { progress: number }) {
           className="text-center"
         >
           <p className="text-sm text-muted-foreground">
-            {isSip ? "12 months cumulative impact" : "Single donation"}
+            {isSip ? "12-month contribution" : "Single donation"}
           </p>
           <p className="mt-1 text-3xl font-bold text-emerald-700">
             ₹{cumulative.toLocaleString("en-IN")}
           </p>
-          {isSip && (
-            <p className="mt-1 text-xs text-emerald-600">
-              ↗ Includes compounding trust bonuses
-            </p>
-          )}
         </motion.div>
       </AnimatePresence>
     </div>
@@ -436,11 +404,9 @@ export function HowItWorksScroll() {
       style={{ height: "500vh" }}
     >
       <Container className="relative h-full">
-        <ProgressDots active={activeStep} />
-
         {/* Sticky visual + text panel */}
         <div className="sticky top-0 z-10 flex h-screen items-center">
-          <div className="grid w-full gap-8 lg:grid-cols-2 lg:gap-12 pl-8 xl:pl-16">
+          <div className="grid w-full gap-8 lg:grid-cols-2 lg:gap-12">
             {/* Left: animated text step */}
             <div className="hidden lg:flex flex-col justify-center">
               <AnimatePresence mode="wait">
