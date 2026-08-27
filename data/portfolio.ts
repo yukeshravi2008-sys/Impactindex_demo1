@@ -97,7 +97,3 @@ export function generateNavHistory(): NavDataPoint[] {
   });
 }
 
-export interface RebalanceComparison {
-  before: { name: string; value: number }[];
-  after: { name: string; value: number }[];
-}
