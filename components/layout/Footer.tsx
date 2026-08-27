@@ -1,4 +1,4 @@
-import { TrendingUp } from "lucide-react";
+import { PremiumLogoIcon } from "@/components/ui/PremiumLogoIcon";
 import { Container } from "./Container";
 import { siteConfig } from "@/data/site";
 
@@ -10,7 +10,7 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-700">
-                <TrendingUp className="h-4 w-4 text-white" aria-hidden="true" />
+                <PremiumLogoIcon className="h-4 w-4 text-white" />
               </div>
               <span className="font-[family-name:var(--font-display)] text-lg font-bold uppercase tracking-wider">
                 IMPACTINDEX

@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { TrendingUp, Menu, LogOut } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
+import { PremiumLogoIcon } from "@/components/ui/PremiumLogoIcon";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -51,7 +52,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5" aria-label="ImpactIndex home">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-700">
-            <TrendingUp className="h-5 w-5 text-white" aria-hidden="true" />
+            <PremiumLogoIcon className="h-5 w-5 text-white" />
           </div>
           <span className="font-[family-name:var(--font-display)] text-xl font-bold uppercase tracking-wider text-foreground">
             IMPACTINDEX
