@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -15,9 +15,11 @@ import {
 import { siteConfig } from "@/data/site";
 import { createClient } from "@/utils/supabase/client";
 
+import { type User } from "@supabase/supabase-js";
+
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
